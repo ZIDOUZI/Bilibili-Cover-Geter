@@ -1,13 +1,14 @@
 // ==UserScript==
-// @name            B站封面获取
+// @name            B站、微信封面获取
 // @namespace       https://github.com/ZIDOUZI/Bilibili-Cover-Geter
-// @version         1.0
-// @description     获取B站视频,文章,直播的封面
+// @version         2.0.1
+// @description     获取B站视频,文章,直播的封面，微信文章的封面
 // @author          子斗子
 // @license         MIT
 // @match           *://www.bilibili.com/read/*
 // @match           *://www.bilibili.com/video/*
 // @match           *://live.bilibili.com/*
+// @match           *://mp.weixin.qq.com/*
 // @exclude         *://api.bilibili.com/*
 // @exclude         *://api.*.bilibili.com/*
 // @exclude         *://*.bilibili.com/api/*
@@ -75,32 +76,35 @@
         var video_AV = /https\:\/\/www\.bilibili\.com\/video\/AV(.*)/i;
         var artical = /https\:\/\/www\.bilibili\.com\/read\/CV(.*)/i;
         var live = /https\:\/\/live\.bilibili\.com\/(.*)/i;
+        var wechat_article = /https\:\/\/mp\.weixin\.qq\.com\/(.*)/i;
 
-        //当前网站类型
-        var type = "";
         //类型对应的正则表达式
         var rex = /a/;
         //偏移量
         var offset = 0;
 
         if (video_AV.test(source_url)) {
-            type = "av"
+            //av视频
             rex = /<meta data-vue-meta=\"true\" itemprop=\"image\" content=\"(.*?)\.jpg\">/
             offset = 53
         } else if (video_BV.test(source_url)) {
-            type = "bv"
+            //bv视频
             rex = /<meta data-vue-meta=\"true\" itemprop=\"image\" content=\"(.*?)\.jpg\">/
             offset = 53
         } else if (artical.test(source_url)) {
-            type = "cv"
+            //cv文章
             rex = /\"origin_image_urls\":\[\"(.*?)\"[,\]]/
             offset = 22
         } else if (live.test(source_url)) {
-            type = "live"
+            //直播
             rex = /\"cover\":\"(.*?)\.jpg\",/
             offset = 9
+        } else if (wechat_article.test(source_url)) {
+            //微信文章
+            rex = /msg_cdn_url = \"(.*?)jpe?g\";/
+            offset = 15
+            window.alert("wechat")
         } else {
-            type = "unknow"
             window.alert("unknow")
         }
 
