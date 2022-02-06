@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name            B站封面获取
-// @namespace       http://tampermonkey.net/
+// @namespace       https://github.com/ZIDOUZI/Bilibili-Cover-Geter
 // @version         1.0
 // @description     获取B站视频,文章,直播的封面
 // @author          子斗子
@@ -105,8 +105,7 @@
         }
 
         //获取封面地址
-        var url4 = unescape(source.match(rex)[0].slice(offset, -2).toString().replace(/\\u/g, '%u'))
-        return url4
+        return source.match(rex)[0].slice(offset, -2).replace(/\\u002F/g, '\/')
     }
 
 })();
