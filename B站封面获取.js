@@ -103,7 +103,6 @@
             //微信文章
             rex = /msg_cdn_url = \"(.*?)jpe?g\";/
             offset = 15
-            window.alert("wechat")
         } else {
             window.alert("unknow")
         }
