@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name            B站、微信封面获取
 // @namespace       https://github.com/ZIDOUZI/Bilibili-Cover-Geter
-// @version         2.0.1
+// @version         2.1.0
 // @description     获取B站视频,文章,直播的封面，微信文章的封面
 // @author          子斗子
 // @license         MIT
@@ -20,6 +20,9 @@
 // ==/UserScript==
 
 (function () {
+
+    //是否在新标签页中打开图片地址
+    const openInNew = true;
 
     //创建容器
     const item = document.createElement('item');
@@ -56,7 +59,11 @@
 
     const button = item.querySelector('.SIR-button')
     button.onclick = () => {
-        window.open(getUrl())
+        if(openInNew) {
+        window.open(getUrl());
+        } else {
+        self.location = getUrl();
+        }
     }
 
     document.head.append(style)
@@ -85,24 +92,25 @@
 
         if (video_AV.test(source_url)) {
             //av视频
-            rex = /<meta data-vue-meta=\"true\" itemprop=\"image\" content=\"(.*?)\.jpg\">/
-            offset = 53
+            rex = /<meta data-vue-meta=\"true\" property=\"og:image\" content=\"(.*?)\.(jpe?g|png)\">/
+            offset = 56
         } else if (video_BV.test(source_url)) {
             //bv视频
-            rex = /<meta data-vue-meta=\"true\" itemprop=\"image\" content=\"(.*?)\.jpg\">/
-            offset = 53
+            rex = /<meta data-vue-meta=\"true\" property=\"og:image\" content=\"(.*?)\.(jpe?g|png)\">/
+            offset = 56
         } else if (artical.test(source_url)) {
             //cv文章
             rex = /\"origin_image_urls\":\[\"(.*?)\"[,\]]/
             offset = 22
         } else if (live.test(source_url)) {
             //直播
-            rex = /\"cover\":\"(.*?)\.jpg\",/
+            rex = /\"cover\":\"(.*?)\.(jpe?g|png)\",/
             offset = 9
         } else if (wechat_article.test(source_url)) {
             //微信文章
-            rex = /msg_cdn_url = \"(.*?)jpe?g\";/
+            rex = /msg_cdn_url = \"(.*?)(jpe?g|png)\";/
             offset = 15
+            window.alert("wechat")
         } else {
             window.alert("unknow")
         }
