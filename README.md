@@ -1,4 +1,4 @@
-# Bilibili-Cover-Geter
+# Bilibili-Cover-Getter
 
 一键获取B站视频、文章、直播封面
 
