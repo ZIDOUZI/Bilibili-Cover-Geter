@@ -6,4 +6,4 @@
 
 [tampermonkey链接](https://greasyfork.org/zh-CN/scripts/439619-b%E7%AB%99%E5%B0%81%E9%9D%A2%E8%8E%B7%E5%8F%96)
 
-另外安卓设备使用的也在编写
+另外安卓设备使用的在[隔壁](https://github.com/ZIDOUZI/Bilibili-Cover-Getter-forAndroid)
